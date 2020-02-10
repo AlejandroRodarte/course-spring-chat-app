@@ -14,11 +14,17 @@ public class ChatController {
     // expected payload is an object of type Mensaje
     // @SendTo for /chat/mensaje for server to emit data to subscribed clients, sending back a Mensaje object
     @MessageMapping("/mensaje")
-    @SendTo("/chat/mensage")
+    @SendTo("/chat/mensaje")
     public Mensaje recibirMensaje(Mensaje mensaje) {
+
         mensaje.setFecha(new Date().getTime());
-        mensaje.setTexto("Recibido por el broker: " + mensaje.getTexto());
+
+        if (mensaje.getTipo().equals("NUEVO_USUARIO")) {
+            mensaje.setTexto("nuevo usuario");
+        }
+
         return mensaje;
+
     }
 
 }
