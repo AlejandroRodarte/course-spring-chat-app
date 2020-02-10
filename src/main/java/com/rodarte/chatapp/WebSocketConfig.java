@@ -18,8 +18,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
                 .withSockJS();
     }
 
-    // enableSimpleBroker prefix: used by the clients to subscribe to events
-    // setApplicationDestinationPrefixes prefix: used by server to emit events
+    // enableSimpleBroker prefix: used by the server to emit events
+    // setApplicationDestinationPrefixes prefix: used by server to listen for events
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         registry.enableSimpleBroker("/chat/");
