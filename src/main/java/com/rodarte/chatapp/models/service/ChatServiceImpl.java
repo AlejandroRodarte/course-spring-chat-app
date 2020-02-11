@@ -3,9 +3,11 @@ package com.rodarte.chatapp.models.service;
 import com.rodarte.chatapp.models.dao.ChatRepository;
 import com.rodarte.chatapp.models.documents.Mensaje;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ChatServiceImpl implements ChatService {
 
     private ChatRepository chatRepository;

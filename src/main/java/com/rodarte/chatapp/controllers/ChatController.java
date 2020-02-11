@@ -5,6 +5,7 @@ import com.rodarte.chatapp.models.service.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 import java.util.Date;
@@ -16,10 +17,12 @@ public class ChatController {
     private String[] colores = { "red", "blue", "green", "magenta", "purple", "orange" };
 
     private ChatService chatService;
+    private SimpMessagingTemplate simpMessagingTemplate;
 
     @Autowired
-    public ChatController(ChatService chatService) {
+    public ChatController(ChatService chatService, SimpMessagingTemplate simpMessagingTemplate) {
         this.chatService = chatService;
+        this.simpMessagingTemplate = simpMessagingTemplate;
     }
 
     // @MessageMapping for /app/mensaje: Listen for clients emitting the /app/mensaje event
@@ -46,6 +49,12 @@ public class ChatController {
     @SendTo("/chat/escribiendo")
     public String estaEscribiendo(String username) {
         return username + " esta escribiendo...";
+    }
+
+    @MessageMapping("/historial")
+    @SendTo("/chat/historial")
+    public void historial(String clienteId) {
+        simpMessagingTemplate.convertAndSend("/chat/historial/" + clienteId, chatService.obtenerUltimos10Mensajes());
     }
 
 }
