@@ -6,9 +6,12 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 
 import java.util.Date;
+import java.util.Random;
 
 @Controller
 public class ChatController {
+
+    private String[] colores = { "red", "blue", "green", "magenta", "purple", "orange" };
 
     // @MessageMapping for /app/mensaje: Listen for clients emitting the /app/mensaje event
     // expected payload is an object of type Mensaje
@@ -21,6 +24,7 @@ public class ChatController {
 
         if (mensaje.getTipo().equals("NUEVO_USUARIO")) {
             mensaje.setTexto("nuevo usuario");
+            mensaje.setColor(colores[new Random().nextInt(colores.length)]);
         }
 
         return mensaje;
